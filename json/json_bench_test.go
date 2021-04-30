@@ -77,6 +77,16 @@ func BenchmarkJsonUnmarshalStruct(b *testing.B) {
 	}
 }
 
+func BenchmarkJsonUnmarshalStructPtr(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		s := m.StructModelPtr{}
+		json.Unmarshal(JsonData, &s)
+		if *s.T != StructExpected.T {
+			panic("incorrect data")
+		}
+	}
+}
+
 func BenchmarkJsonUnmarshalMap(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		mm := m.MapModel{}
@@ -116,6 +126,26 @@ func BenchmarkJsonMarshalMap(b *testing.B) {
 func BenchmarkEasyjsonUnmarshalStruct(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		s := m.StructModel{}
+		easyjson.Unmarshal(JsonData, &s)
+		if s.T != StructExpected.T {
+			panic("incorrect data")
+		}
+	}
+}
+
+func BenchmarkEasyjsonUnmarshalStructPtr(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		s := m.StructModelPtr{}
+		easyjson.Unmarshal(JsonData, &s)
+		if *s.T != StructExpected.T {
+			panic("incorrect data")
+		}
+	}
+}
+
+func BenchmarkEasyjsonUnmarshalStructIntern(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		s := m.StructModelIntern{}
 		easyjson.Unmarshal(JsonData, &s)
 		if s.T != StructExpected.T {
 			panic("incorrect data")

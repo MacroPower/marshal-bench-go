@@ -1,8 +1,6 @@
 package benchmarks_test
 
 import (
-	"io/ioutil"
-
 	m "github.com/MacroPower/marshal-bench-go/benchmarks"
 )
 
@@ -30,6 +28,8 @@ var (
 		T: "oVdp5dC7nzxS2VMRFE6S",
 	}
 
+	StructExpected1000 m.StructModelSl
+
 	MapExpected = m.MapModel{
 		"A": "6BEJpen653OVhFmRgj3C",
 		"B": "jLQxPUdQl0SyS0cKqpgj",
@@ -53,13 +53,12 @@ var (
 		"T": "oVdp5dC7nzxS2VMRFE6S",
 	}
 
-	JsonData []byte
+	MapExpected1000 m.MapModelSl
 )
 
 func init() {
-	content, err := ioutil.ReadFile("testdata/strings_flat_small.json")
-	if err != nil {
-		panic(err)
+	for i := 0; i < 1000; i++ {
+		StructExpected1000 = append(StructExpected1000, StructExpected)
+		MapExpected1000 = append(MapExpected1000, MapExpected)
 	}
-	JsonData = content
 }
